@@ -1,0 +1,71 @@
+workflows:
+  android-debug:
+    name: Android Debug Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Generate .env file
+        script: |
+          echo "SUPABASE_URL=$SUPABASE_URL" > .env
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
+          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> .env
+
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Build Android APK (debug)
+        script: flutter build apk --debug
+
+    artifacts:
+      - build/app/outputs/flutter-apk/app-debug.apk
+
+  android-release:
+    name: Android Release Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Generate .env file
+        script: |
+          echo "SUPABASE_URL=$SUPABASE_URL" > .env
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
+          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> .env
+
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Build Android AAB (release)
+        script: flutter build appbundle --release
+
+    artifacts:
+      - build/app/outputs/bundle/release/app-release.aab
+
+  ios-debug:
+    name: iOS Debug Build
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Generate .env file
+        script: |
+          echo "SUPABASE_URL=$SUPABASE_URL" > .env
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
+          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> .env
+
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: find . -name "Podfile" -execdir pod install \;
+
+      - name: Build iOS (no codesign)
+        script: flutter build ios --debug --no-codesign
+
+    artifacts:
+      - build/ios/iphoneos/Runner.app
