@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\Users\\\\Pichau\\\\Projetos\\\\Birthday\" /s)",
+      "Bash(flutter --version)",
+      "Bash(flutter pub:*)",
+      "WebFetch(domain:pub.dev)",
+      "Bash(flutter create:*)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/fredoka/v14/X7nP4b87HvSqjb_WIi2yDCRwoQ.ttf\" -o assets/fonts/Fredoka-SemiBold.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/fredoka/v14/X7nP4b87HvSqjb_WIi2yDCRwoQ.ttf\" -o assets/fonts/Fredoka-Bold.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/nunito/v26/XRXI3I6Li01BKofiOc5wtlZ2di8HDDkmRg.ttf\" -o assets/fonts/Nunito-Regular.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/nunito/v26/XRXI3I6Li01BKofiOc5wtlZ2di8HDDkmRg.ttf\" -o assets/fonts/Nunito-SemiBold.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/nunito/v26/XRXI3I6Li01BKofiOc5wtlZ2di8HDDkmRg.ttf\" -o assets/fonts/Nunito-Bold.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3O8SLMFg.ttf\" -o assets/fonts/Fredoka-Regular.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OLyXMFg.ttf\" -o assets/fonts/Fredoka-SemiBold.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/fredoka/v17/X7nP4b87HvSqjb_WIi2yDCRwoQ_k7367_B-i2yQag0-mac3OFiXMFg.ttf\" -o assets/fonts/Fredoka-Bold.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/nunito/v32/XRXI3I6Li01BKofiOc5wtlZ2di8HDLshRTM.ttf\" -o assets/fonts/Nunito-Regular.ttf)",
+      "Bash(curl -L \"https://fonts.gstatic.com/s/nunito/v32/XRXI3I6Li01BKofiOc5wtlZ2di8HDGUmRTM.ttf\" -o assets/fonts/Nunito-SemiBold.ttf)",
+      "Bash(cp assets/animations/confetti.json assets/animations/splash_cake.json)",
+      "Bash(cp assets/animations/confetti.json assets/animations/balloons.json)",
+      "Bash(cp assets/animations/confetti.json assets/animations/empty_state.json)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter devices:*)",
+      "Bash(flutter emulators:*)",
+      "Bash(flutter build:*)",
+      "Bash(flutter run:*)",
+      "WebSearch",
+      "WebFetch(domain:www.revenuecat.com)",
+      "WebFetch(domain:supabase.com)"
+    ]
+  }
+}
