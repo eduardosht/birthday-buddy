@@ -39,13 +39,18 @@ workflows:
     artifacts:
       - build/app/outputs/bundle/release/app-release.aab
 
-  ios-debug:
-    name: iOS Debug Build
+  ios-testflight:
+    name: iOS TestFlight Release
     max_build_duration: 60
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.birthdaybuddy.birthday
+        certificate: Developer_Certificate
+        provisioning_profile: Sht IPhone
 
     scripts:
       - name: Get Flutter packages
@@ -54,12 +59,17 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
-      - name: Build iOS (no codesign)
+      - name: Build iOS IPA (release)
         script: |
-          flutter build ios --debug --no-codesign \
+          flutter build ipa --release \
             --dart-define=SUPABASE_URL=$SUPABASE_URL \
             --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
             --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
 
     artifacts:
-      - build/ios/iphoneos/Runner.app
+      - build/ios/ipa/*.ipa
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
