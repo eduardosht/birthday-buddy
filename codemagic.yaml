@@ -75,10 +75,45 @@ workflows:
 
       - name: Build iOS IPA
         script: |
-          flutter build ipa --release \
-            --dart-define=SUPABASE_URL=$SUPABASE_URL \
-            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
-            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
+          # Encode dart-defines the same way Flutter does internally
+          DART_DEFINES=$(echo -n "SUPABASE_URL=$SUPABASE_URL,SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY,REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" | base64)
+
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -destination "generic/platform=iOS" \
+            DART_DEFINES="$DART_DEFINES" \
+            DART_OBFUSCATION=false \
+            TRACK_WIDGET_CREATION=false \
+            TREE_SHAKE_ICONS=false \
+            PACKAGE_CONFIG=".dart_tool/package_config.json" \
+            archive
+
+          cat > /tmp/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>teamID</key>
+            <string>$APPLE_TEAM_ID</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.birthdaybuddy.birthday</key>
+              <string>Distribution</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+
+          xcodebuild -exportArchive \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -exportOptionsPlist /tmp/ExportOptions.plist \
+            -exportPath build/ios/ipa
 
     artifacts:
       - build/ios/ipa/*.ipa
