@@ -68,12 +68,25 @@ workflows:
       - name: Set up code signing
         script: xcode-project use-profiles
 
-      - name: Build iOS IPA (release)
+      - name: Flutter build (no codesign)
         script: |
-          flutter build ipa --release \
+          flutter build ios --release --no-codesign \
             --dart-define=SUPABASE_URL=$SUPABASE_URL \
             --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
             --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
+
+      - name: Archive and export IPA
+        script: |
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -destination "generic/platform=iOS" \
+            archive
+
+          xcode-project build-ipa \
+            --workspace ios/Runner.xcworkspace \
+            --archive-path build/ios/archive/Runner.xcarchive
 
           xcodebuild -exportArchive \
             -archivePath build/ios/archive/Runner.xcarchive \
@@ -82,6 +95,7 @@ workflows:
 
     artifacts:
       - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
 
     publishing:
       app_store_connect:
