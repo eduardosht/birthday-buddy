@@ -8,9 +8,9 @@ workflows:
     scripts:
       - name: Generate .env file
         script: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > .env
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
-          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> .env
+          echo "SUPABASE_URL=$SUPABASE_URL" > "$CM_BUILD_DIR/.env"
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$CM_BUILD_DIR/.env"
+          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> "$CM_BUILD_DIR/.env"
 
       - name: Get Flutter packages
         script: flutter pub get
@@ -30,9 +30,9 @@ workflows:
     scripts:
       - name: Generate .env file
         script: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > .env
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
-          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> .env
+          echo "SUPABASE_URL=$SUPABASE_URL" > "$CM_BUILD_DIR/.env"
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$CM_BUILD_DIR/.env"
+          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> "$CM_BUILD_DIR/.env"
 
       - name: Get Flutter packages
         script: flutter pub get
@@ -54,9 +54,9 @@ workflows:
     scripts:
       - name: Generate .env file
         script: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > .env
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> .env
-          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> .env
+          echo "SUPABASE_URL=$SUPABASE_URL" > "$CM_BUILD_DIR/.env"
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$CM_BUILD_DIR/.env"
+          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> "$CM_BUILD_DIR/.env"
 
       - name: Get Flutter packages
         script: flutter pub get
