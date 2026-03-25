@@ -7,6 +7,12 @@ class AppConstants {
 
   // ── RevenueCat ───────────────────────────────────────────────────────────
   static const String revenueCatApiKey = String.fromEnvironment('REVENUE_CAT_API_KEY');
+
+  static void validateEnv() {
+    if (supabaseUrl.isEmpty) throw Exception('SUPABASE_URL is not set');
+    if (supabaseAnonKey.isEmpty) throw Exception('SUPABASE_ANON_KEY is not set');
+    if (revenueCatApiKey.isEmpty) throw Exception('REVENUE_CAT_API_KEY is not set');
+  }
   static const String rcEntitlementId = 'Birthday Buddy Pro';
   static const String rcMonthlyProductId = 'monthly';
   static const String rcYearlyProductId = 'yearly';

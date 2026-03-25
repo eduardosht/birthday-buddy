@@ -75,8 +75,12 @@ workflows:
 
       - name: Build iOS IPA
         script: |
-          # Encode dart-defines the same way Flutter does internally
-          DART_DEFINES=$(echo -n "SUPABASE_URL=$SUPABASE_URL,SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY,REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" | base64)
+          # Encode dart-defines exactly as Flutter does: each value base64-encoded, comma-joined
+          DART_DEFINES=$(printf '%s' \
+            "$(echo -n "SUPABASE_URL=$SUPABASE_URL" | base64)," \
+            "$(echo -n "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" | base64)," \
+            "$(echo -n "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" | base64)" \
+          )
 
           xcodebuild -workspace ios/Runner.xcworkspace \
             -scheme Runner \

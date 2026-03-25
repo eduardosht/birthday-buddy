@@ -21,6 +21,7 @@ Future<void> main() async {
   // Initialize Firebase & Crashlytics first so all errors are captured
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  AppConstants.validateEnv();
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
