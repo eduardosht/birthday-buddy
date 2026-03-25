@@ -115,8 +115,17 @@ workflows:
             -exportOptionsPlist /tmp/ExportOptions.plist \
             -exportPath build/ios/ipa
 
+      - name: Upload dSYMs to Firebase Crashlytics
+        script: |
+          find build/ios/archive/Runner.xcarchive -name "*.dSYM" | \
+          xargs -I {} \
+            ios/Pods/FirebaseCrashlytics/upload-symbols \
+            -gsp ios/Runner/GoogleService-Info.plist \
+            -p ios {}
+
     artifacts:
       - build/ios/ipa/*.ipa
+      - build/ios/archive/Runner.xcarchive/dSYMs/*.dSYM
       - /tmp/xcodebuild_logs/*.log
 
     publishing:
