@@ -21,7 +21,6 @@ Future<void> main() async {
   // Initialize Firebase & Crashlytics first so all errors are captured
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  AppConstants.validateEnv();
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
@@ -29,6 +28,8 @@ Future<void> main() async {
 
   await runZonedGuarded(
     () async {
+      AppConstants.validateEnv();
+
       // Initialize pt_BR locale for date formatting
       await initializeDateFormatting('pt_BR', null);
 
