@@ -65,48 +65,12 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
-      - name: Build and archive iOS
+      - name: Build iOS IPA (release)
         script: |
-          flutter build ios --release --no-codesign \
+          flutter build ipa --release \
             --dart-define=SUPABASE_URL=$SUPABASE_URL \
             --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
             --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
-
-          xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -destination "generic/platform=iOS" \
-            archive \
-            CODE_SIGN_STYLE=Manual \
-            "CODE_SIGN_IDENTITY[sdk=iphoneos*]=Apple Distribution" \
-            "PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]=Distribution" \
-            DEVELOPMENT_TEAM="$APPLE_TEAM_ID"
-
-      - name: Export IPA
-        script: |
-          PROFILE_UUID=$(grep -a 'UUID' -A5 /Users/builder/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision | grep -o '[0-9a-f-]\{36\}' | head -1)
-          cat > /tmp/ExportOptions.plist << EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key>
-            <string>app-store-connect</string>
-            <key>teamID</key>
-            <string>$APPLE_TEAM_ID</string>
-            <key>provisioningProfiles</key>
-            <dict>
-              <key>com.birthdaybuddy.birthday</key>
-              <string>$PROFILE_UUID</string>
-            </dict>
-          </dict>
-          </plist>
-          EOF
-          xcodebuild -exportArchive \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -exportOptionsPlist /tmp/ExportOptions.plist \
-            -exportPath build/ios/ipa
 
           xcodebuild -exportArchive \
             -archivePath build/ios/archive/Runner.xcarchive \
