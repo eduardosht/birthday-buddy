@@ -59,9 +59,29 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
+      - name: Create export options
+        script: |
+          PROFILE_UUID=$(grep UUID -A1 /Users/builder/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision | grep -o "[0-9a-f-]\{36\}" | head -1)
+          cat > $CM_BUILD_DIR/ios/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.birthdaybuddy.birthday</key>
+              <string>$PROFILE_UUID</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+
       - name: Build iOS IPA (release)
         script: |
           flutter build ipa --release \
+            --export-options-plist=ios/ExportOptions.plist \
             --dart-define=SUPABASE_URL=$SUPABASE_URL \
             --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
             --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
