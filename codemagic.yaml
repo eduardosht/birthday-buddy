@@ -65,6 +65,9 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
+      - name: Set up code signing
+        script: xcode-project use-profiles
+
       - name: Build iOS IPA (release)
         script: |
           flutter build ipa --release \
