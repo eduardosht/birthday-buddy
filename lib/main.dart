@@ -5,7 +5,6 @@ import 'package:birthday/data/repositories/person_repository.dart';
 import 'package:birthday/services/checked_today_service.dart';
 import 'package:birthday/services/notification_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -13,9 +12,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Load environment variables
-  await dotenv.load(fileName: '.env');
 
   // Initialize pt_BR locale for date formatting
   await initializeDateFormatting('pt_BR', null);

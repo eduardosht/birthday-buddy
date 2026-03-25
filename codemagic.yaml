@@ -6,17 +6,15 @@ workflows:
       flutter: stable
 
     scripts:
-      - name: Generate .env file
-        script: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > "$CM_BUILD_DIR/.env"
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$CM_BUILD_DIR/.env"
-          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> "$CM_BUILD_DIR/.env"
-
       - name: Get Flutter packages
         script: flutter pub get
 
       - name: Build Android APK (debug)
-        script: flutter build apk --debug
+        script: |
+          flutter build apk --debug \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
 
     artifacts:
       - build/app/outputs/flutter-apk/app-debug.apk
@@ -28,17 +26,15 @@ workflows:
       flutter: stable
 
     scripts:
-      - name: Generate .env file
-        script: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > "$CM_BUILD_DIR/.env"
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$CM_BUILD_DIR/.env"
-          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> "$CM_BUILD_DIR/.env"
-
       - name: Get Flutter packages
         script: flutter pub get
 
       - name: Build Android AAB (release)
-        script: flutter build appbundle --release
+        script: |
+          flutter build appbundle --release \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
 
     artifacts:
       - build/app/outputs/bundle/release/app-release.aab
@@ -52,12 +48,6 @@ workflows:
       cocoapods: default
 
     scripts:
-      - name: Generate .env file
-        script: |
-          echo "SUPABASE_URL=$SUPABASE_URL" > "$CM_BUILD_DIR/.env"
-          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> "$CM_BUILD_DIR/.env"
-          echo "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" >> "$CM_BUILD_DIR/.env"
-
       - name: Get Flutter packages
         script: flutter pub get
 
@@ -65,7 +55,11 @@ workflows:
         script: find . -name "Podfile" -execdir pod install \;
 
       - name: Build iOS (no codesign)
-        script: flutter build ios --debug --no-codesign
+        script: |
+          flutter build ios --debug --no-codesign \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
 
     artifacts:
       - build/ios/iphoneos/Runner.app
