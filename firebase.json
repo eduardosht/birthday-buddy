@@ -1,1 +1,1 @@
-{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"birthday-buddy-b5db0","configurations":{"ios":"1:252893953804:ios:e614176a3b6200fafe9329"}}}}}}
+{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"birthday-buddy-b5db0","configurations":{"android":"1:252893953804:android:2303f83386f6b09ffe9329","ios":"1:252893953804:ios:e614176a3b6200fafe9329"}}},"android":{"default":{"projectId":"birthday-buddy-b5db0","appId":"1:252893953804:android:2303f83386f6b09ffe9329","fileOutput":"android/app/google-services.json"}}}}}

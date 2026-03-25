@@ -24,10 +24,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -60,4 +57,13 @@ class DefaultFirebaseOptions {
     storageBucket: 'birthday-buddy-b5db0.firebasestorage.app',
     iosBundleId: 'com.birthdaybuddy.birthday',
   );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyArjSAyEMl4oVd4L9dnfbK3_mAn7YdPrwA',
+    appId: '1:252893953804:android:2303f83386f6b09ffe9329',
+    messagingSenderId: '252893953804',
+    projectId: 'birthday-buddy-b5db0',
+    storageBucket: 'birthday-buddy-b5db0.firebasestorage.app',
+  );
+
 }
