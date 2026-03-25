@@ -65,7 +65,7 @@ workflows:
       - name: Set build number
         script: |
           LATEST_BUILD=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID" 2>/dev/null || echo "0")
-          agvtool new-version -all $((LATEST_BUILD + 1))
+          cd ios && agvtool new-version -all $((LATEST_BUILD + 1))
 
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
