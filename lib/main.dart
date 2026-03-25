@@ -4,6 +4,8 @@ import 'package:birthday/data/database/database_helper.dart';
 import 'package:birthday/data/repositories/person_repository.dart';
 import 'package:birthday/services/checked_today_service.dart';
 import 'package:birthday/services/notification_service.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -12,6 +14,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase & Crashlytics
+  await Firebase.initializeApp();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   // Initialize pt_BR locale for date formatting
   await initializeDateFormatting('pt_BR', null);
@@ -60,3 +66,4 @@ Future<void> main() async {
     ),
   );
 }
+
