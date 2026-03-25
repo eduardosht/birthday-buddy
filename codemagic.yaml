@@ -109,11 +109,6 @@ workflows:
             -exportOptionsPlist /tmp/ExportOptions.plist \
             -exportPath build/ios/ipa
 
-          xcodebuild -exportArchive \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -exportOptionsPlist ios/ExportOptions.plist \
-            -exportPath build/ios/ipa
-
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
