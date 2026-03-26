@@ -28,6 +28,7 @@ Future<void> main() async {
 
   await runZonedGuarded(
     () async {
+      await FirebaseCrashlytics.instance.log('App starting - supabaseUrl empty: ${AppConstants.supabaseUrl.isEmpty}');
       AppConstants.validateEnv();
 
       // Initialize pt_BR locale for date formatting
