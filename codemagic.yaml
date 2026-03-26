@@ -49,6 +49,8 @@ workflows:
     integrations:
       app_store_connect: CodeMagic API Key
     environment:
+      groups:
+        - bbgroups
       flutter: stable
       xcode: latest
       cocoapods: default
