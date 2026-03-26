@@ -43,6 +43,84 @@ workflows:
     artifacts:
       - build/app/outputs/bundle/release/app-release.aab
 
+  ios-crashlytics-test:
+    name: iOS Crashlytics Test
+    max_build_duration: 60
+    integrations:
+      app_store_connect: CodeMagic API Key
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.birthdaybuddy.birthday
+
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: find . -name "Podfile" -execdir pod install \;
+
+      - name: Set up code signing
+        script: xcode-project use-profiles
+
+      - name: Archive
+        script: |
+          xcodebuild -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -destination "generic/platform=iOS" \
+            DART_OBFUSCATION=false \
+            TRACK_WIDGET_CREATION=false \
+            TREE_SHAKE_ICONS=false \
+            PACKAGE_CONFIG=".dart_tool/package_config.json" \
+            archive
+
+          cat > /tmp/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>teamID</key>
+            <string>$APPLE_TEAM_ID</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.birthdaybuddy.birthday</key>
+              <string>Distribution</string>
+            </dict>
+          </dict>
+          </plist>
+          EOF
+
+          xcodebuild -exportArchive \
+            -archivePath build/ios/archive/Runner.xcarchive \
+            -exportOptionsPlist /tmp/ExportOptions.plist \
+            -exportPath build/ios/ipa
+
+      - name: Upload dSYMs to Firebase Crashlytics
+        script: |
+          find build/ios/archive/Runner.xcarchive -name "*.dSYM" | \
+          xargs -I {} \
+            ios/Pods/FirebaseCrashlytics/upload-symbols \
+            -gsp ios/Runner/GoogleService-Info.plist \
+            -p ios {}
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/archive/Runner.xcarchive/dSYMs/*.dSYM
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
   ios-testflight:
     name: iOS TestFlight Release
     max_build_duration: 60
