@@ -70,20 +70,24 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
-      - name: Set up code signing
+      - name: Set up iOS code signing
         script: xcode-project use-profiles
 
-      - name: Archive
+      - name: Build iOS (no codesign)
+        script: |
+          flutter build ios --release --no-codesign \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
+
+      - name: Archive and export IPA
         script: |
           xcodebuild -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -archivePath build/ios/archive/Runner.xcarchive \
             -destination "generic/platform=iOS" \
-            DART_OBFUSCATION=false \
-            TRACK_WIDGET_CREATION=false \
-            TREE_SHAKE_ICONS=false \
-            PACKAGE_CONFIG=".dart_tool/package_config.json" \
+            CODE_SIGN_STYLE=Manual \
             archive
 
           cat > /tmp/ExportOptions.plist << EOF
@@ -155,28 +159,24 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
-      - name: Set up code signing
+      - name: Set up iOS code signing
         script: xcode-project use-profiles
 
-      - name: Build iOS IPA
+      - name: Build iOS (no codesign)
         script: |
-          # Encode dart-defines exactly as Flutter does: each value base64-encoded, comma-joined
-          DART_DEFINES=$(printf '%s' \
-            "$(echo -n "SUPABASE_URL=$SUPABASE_URL" | base64)," \
-            "$(echo -n "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" | base64)," \
-            "$(echo -n "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" | base64)" \
-          )
+          flutter build ios --release --no-codesign \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY
 
+      - name: Archive and export IPA
+        script: |
           xcodebuild -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -archivePath build/ios/archive/Runner.xcarchive \
             -destination "generic/platform=iOS" \
-            DART_DEFINES="$DART_DEFINES" \
-            DART_OBFUSCATION=false \
-            TRACK_WIDGET_CREATION=false \
-            TREE_SHAKE_ICONS=false \
-            PACKAGE_CONFIG=".dart_tool/package_config.json" \
+            CODE_SIGN_STYLE=Manual \
             archive
 
           cat > /tmp/ExportOptions.plist << EOF
