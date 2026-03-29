@@ -20,7 +20,7 @@ ThemeData buildAppTheme() {
       titleTextStyle: AppTextStyles.titleLarge,
       surfaceTintColor: Colors.transparent,
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: AppColors.cardBg,
       elevation: 0,
       margin: EdgeInsets.zero,
