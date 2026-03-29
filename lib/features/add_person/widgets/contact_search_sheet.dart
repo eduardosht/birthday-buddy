@@ -99,7 +99,7 @@ class _ContactSearchSheetState extends State<ContactSearchSheet> {
                             return ListTile(
                               leading: CircleAvatar(
                                 backgroundColor:
-                                    AppColors.primary.withValues(alpha: 0.2),
+                                    AppColors.primary.withOpacity(0.2),
                                 child: Text(
                                   contact.displayName.isNotEmpty
                                       ? contact.displayName[0].toUpperCase()

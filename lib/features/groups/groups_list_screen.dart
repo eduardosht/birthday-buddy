@@ -113,7 +113,7 @@ class _GroupCard extends ConsumerWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: group.color.withValues(alpha: 0.12),
+                color: group.color.withOpacity(0.12),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Center(
@@ -265,7 +265,7 @@ class _AddGroupBottomSheetState extends State<AddGroupBottomSheet> {
   void initState() {
     super.initState();
     _nameController.text = widget.initialName ?? '';
-    _selectedColorValue = widget.initialColorValue ?? AppColors.groupColors[0].toARGB32();
+    _selectedColorValue = widget.initialColorValue ?? AppColors.groupColors[0].value;
     _selectedEmoji = widget.initialEmoji ?? '🎉';
   }
 
@@ -316,9 +316,9 @@ class _AddGroupBottomSheetState extends State<AddGroupBottomSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: AppColors.groupColors.map((color) {
-              final selected = color.toARGB32() == _selectedColorValue;
+              final selected = color.value == _selectedColorValue;
               return GestureDetector(
-                onTap: () => setState(() => _selectedColorValue = color.toARGB32()),
+                onTap: () => setState(() => _selectedColorValue = color.value),
                 child: Container(
                   width: 38,
                   height: 38,
@@ -330,7 +330,7 @@ class _AddGroupBottomSheetState extends State<AddGroupBottomSheet> {
                       width: selected ? 3 : 0,
                     ),
                     boxShadow: selected
-                        ? [BoxShadow(color: color.withValues(alpha: 0.5), blurRadius: 8)]
+                        ? [BoxShadow(color: color.withOpacity(0.5), blurRadius: 8)]
                         : null,
                   ),
                   child: selected
@@ -356,7 +356,7 @@ class _AddGroupBottomSheetState extends State<AddGroupBottomSheet> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: selected ? AppColors.outline : AppColors.textLight.withValues(alpha: 0.3),
+                      color: selected ? AppColors.outline : AppColors.textLight.withOpacity(0.3),
                       width: selected ? 2 : 1,
                     ),
                     color: selected ? AppColors.primaryLight : Colors.transparent,

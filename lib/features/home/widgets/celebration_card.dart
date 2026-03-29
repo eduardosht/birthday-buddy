@@ -60,7 +60,7 @@ class _CelebrationCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.primaryLight,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 1),
+          border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 1),
         ),
         child: Row(
           children: [

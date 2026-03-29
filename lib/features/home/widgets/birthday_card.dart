@@ -135,7 +135,7 @@ class _AvatarWidget extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color.withValues(alpha: 0.15),
+        color: color.withOpacity(0.15),
       ),
       child: Center(
         child: Text(

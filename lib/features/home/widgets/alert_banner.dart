@@ -43,7 +43,7 @@ class _SingleAlertBanner extends StatelessWidget {
         decoration: BoxDecoration(
           color: bgColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withValues(alpha: 0.25), width: 1),
+          border: Border.all(color: color.withOpacity(0.25), width: 1),
         ),
         child: Row(
           children: [
@@ -51,7 +51,7 @@ class _SingleAlertBanner extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.15),
+                color: color.withOpacity(0.15),
                 shape: BoxShape.circle,
               ),
               child: Icon(

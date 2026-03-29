@@ -107,7 +107,7 @@ class _AddPersonScreenState extends ConsumerState<AddPersonScreen> {
                       height: 110,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.primary.withValues(alpha: 0.2),
+                        color: AppColors.primary.withOpacity(0.2),
                         border: Border.all(color: AppColors.outline, width: 2.5),
                         image: _photoPath != null && File(_photoPath!).existsSync()
                             ? DecorationImage(
@@ -167,10 +167,10 @@ class _AddPersonScreenState extends ConsumerState<AddPersonScreen> {
                     children: [
                       // Day picker
                       Expanded(child: _buildPickerColumn('Dia', 1, 31, _day, (v) => setState(() => _day = v))),
-                      Container(width: 1, height: 120, color: AppColors.outline.withValues(alpha: 0.2)),
+                      Container(width: 1, height: 120, color: AppColors.outline.withOpacity(0.2)),
                       // Month picker
                       Expanded(child: _buildMonthPicker()),
-                      Container(width: 1, height: 120, color: AppColors.outline.withValues(alpha: 0.2)),
+                      Container(width: 1, height: 120, color: AppColors.outline.withOpacity(0.2)),
                       // Year picker (disabled if unknown)
                       Expanded(child: _buildPickerColumn('Ano', 1924, DateTime.now().year, _year,
                         _yearUnknown ? null : (v) => setState(() => _year = v),

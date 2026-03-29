@@ -167,7 +167,7 @@ class _BirthdayCalendarState extends ConsumerState<BirthdayCalendar> {
                       ? Border.all(color: AppColors.primary, width: 1.5)
                       : isToday
                           ? Border.all(
-                              color: AppColors.primary.withValues(alpha: 0.4),
+                              color: AppColors.primary.withOpacity(0.4),
                               width: 1)
                           : null,
                 ),
@@ -265,9 +265,9 @@ class _SelectedPersonTile extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: groupColor.withValues(alpha: 0.08),
+          color: groupColor.withOpacity(0.08),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: groupColor.withValues(alpha: 0.25), width: 1),
+          border: Border.all(color: groupColor.withOpacity(0.25), width: 1),
         ),
         child: Row(
           children: [

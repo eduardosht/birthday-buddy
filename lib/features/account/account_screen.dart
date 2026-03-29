@@ -139,7 +139,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
                           .copyWith(color: AppColors.alertRed)),
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(
-                        color: AppColors.alertRed.withValues(alpha: 0.4)),
+                        color: AppColors.alertRed.withOpacity(0.4)),
                     padding: const EdgeInsets.symmetric(vertical: 13),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
@@ -410,7 +410,7 @@ class _PlanCard extends StatelessWidget {
             height: 44,
             decoration: BoxDecoration(
               color: isPro
-                  ? const Color(0xFFF0B429).withValues(alpha: 0.15)
+                  ? const Color(0xFFF0B429).withOpacity(0.15)
                   : AppColors.surfaceVariant,
               borderRadius: BorderRadius.circular(12),
             ),
@@ -446,7 +446,7 @@ class _PlanCard extends StatelessWidget {
                       : '${AccountProfile.freeMaxGroups} grupo · máx. ${AccountProfile.freeMaxPeople} pessoas',
                   style: AppTextStyles.label.copyWith(
                     color: isPro
-                        ? Colors.white.withValues(alpha: 0.6)
+                        ? Colors.white.withOpacity(0.6)
                         : AppColors.textLight,
                   ),
                 ),
@@ -547,7 +547,7 @@ class _UsageTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isAtLimit
-              ? AppColors.alertRed.withValues(alpha: 0.4)
+              ? AppColors.alertRed.withOpacity(0.4)
               : AppColors.outline,
           width: 1,
         ),

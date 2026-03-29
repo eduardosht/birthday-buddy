@@ -284,7 +284,7 @@ class _CelebrationScreenState extends ConsumerState<CelebrationScreen> {
       height: 120,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: groupColor.withValues(alpha: 0.15),
+        color: groupColor.withOpacity(0.15),
         border: Border.all(
           color: isToday ? AppColors.primary : AppColors.outline,
           width: isToday ? 2.5 : 1.5,

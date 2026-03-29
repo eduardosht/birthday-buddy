@@ -16,18 +16,18 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize Firebase & Crashlytics first so all errors are captured
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
-
   await runZonedGuarded(
     () async {
+      WidgetsFlutterBinding.ensureInitialized();
+
+      // Initialize Firebase & Crashlytics first so all errors are captured
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
+
       await FirebaseCrashlytics.instance.log('App starting - supabaseUrl empty: ${AppConstants.supabaseUrl.isEmpty}');
       AppConstants.validateEnv();
 
