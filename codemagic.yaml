@@ -51,8 +51,8 @@ workflows:
     environment:
       groups:
         - bbgroups
-      flutter: 3.24.5
-      xcode: 15.2
+      flutter: stable
+      xcode: 16.3
       cocoapods: default
       ios_signing:
         distribution_type: app_store
