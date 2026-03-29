@@ -165,7 +165,10 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
   }
 
   Future<void> _showCustomerCenter(BuildContext context) async {
-    await RevenueCatUI.presentCustomerCenter();
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'default',
+      displayCloseButton: true,
+    );
     if (mounted) {
       await ref.read(accountProvider.notifier).refreshPlan();
     }
