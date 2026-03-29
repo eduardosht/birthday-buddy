@@ -75,25 +75,6 @@ workflows:
 
       - name: Build iOS IPA
         script: |
-          # Encode dart-defines exactly as Flutter does: each value base64-encoded, comma-joined
-          DART_DEFINES=$(printf '%s' \
-            "$(echo -n "SUPABASE_URL=$SUPABASE_URL" | base64)," \
-            "$(echo -n "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" | base64)," \
-            "$(echo -n "REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY" | base64)" \
-          )
-
-          xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -destination "generic/platform=iOS" \
-            DART_DEFINES="$DART_DEFINES" \
-            DART_OBFUSCATION=false \
-            TRACK_WIDGET_CREATION=false \
-            TREE_SHAKE_ICONS=false \
-            PACKAGE_CONFIG=".dart_tool/package_config.json" \
-            archive
-
           cat > /tmp/ExportOptions.plist << EOF
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -114,10 +95,11 @@ workflows:
           </plist>
           EOF
 
-          xcodebuild -exportArchive \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -exportOptionsPlist /tmp/ExportOptions.plist \
-            -exportPath build/ios/ipa
+          flutter build ipa --release \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY \
+            --export-options-plist=/tmp/ExportOptions.plist
 
       - name: Upload dSYMs to Firebase Crashlytics
         script: |
@@ -130,7 +112,6 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/archive/Runner.xcarchive/dSYMs/*.dSYM
-      - /tmp/xcodebuild_logs/*.log
 
     publishing:
       app_store_connect:
