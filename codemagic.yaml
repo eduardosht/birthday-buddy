@@ -68,9 +68,7 @@ workflows:
           cd ios && agvtool new-version -all $((LATEST_BUILD + 1))
 
       - name: Install CocoaPods
-        script: |
-          pod repo update
-          find . -name "Podfile" -execdir pod install \;
+        script: find . -name "Podfile" -execdir pod install --repo-update \;
 
       - name: Set up code signing
         script: xcode-project use-profiles
