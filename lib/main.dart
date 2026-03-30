@@ -20,41 +20,41 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
       // Initialize Firebase & Crashlytics first so all errors are captured
-      await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform);
+      // await Firebase.initializeApp(
+      //     options: DefaultFirebaseOptions.currentPlatform);
 
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+      // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
       AppConstants.validateEnv();
 
       // Initialize pt_BR locale for date formatting
-      await initializeDateFormatting('pt_BR', null);
+      // await initializeDateFormatting('pt_BR', null);
 
       // Initialize Supabase
-      await Supabase.initialize(
-        url: AppConstants.supabaseUrl,
-        anonKey: AppConstants.supabaseAnonKey,
-      );
+      // await Supabase.initialize(
+      //   url: AppConstants.supabaseUrl,
+      //   anonKey: AppConstants.supabaseAnonKey,
+      // );
 
       // Initialize RevenueCat
-      await Purchases.setLogLevel(LogLevel.debug);
-      await Purchases.configure(
-        PurchasesConfiguration(AppConstants.revenueCatApiKey),
-      );
+      // await Purchases.setLogLevel(LogLevel.debug);
+      // await Purchases.configure(
+      //   PurchasesConfiguration(AppConstants.revenueCatApiKey),
+      // );
 
       // If user is already logged in, identify them in RevenueCat
-      final user = Supabase.instance.client.auth.currentUser;
-      if (user != null) {
-        await Purchases.logIn(user.id);
-      }
+      // final user = Supabase.instance.client.auth.currentUser;
+      // if (user != null) {
+      //   await Purchases.logIn(user.id);
+      // }
 
-      // Initialize database
-      await DatabaseHelper.instance.database;
+      // // Initialize database
+      // await DatabaseHelper.instance.database;
 
-      // Initialize notifications
-      await NotificationService.instance.initialize();
+      // // Initialize notifications
+      // await NotificationService.instance.initialize();
 
-      // Reschedule all notifications on cold start (repairs after device reboot)
+      // // Reschedule all notifications on cold start (repairs after device reboot)
       final allPeople = await PersonRepository(
         DatabaseHelper.instance,
       ).getAll();
