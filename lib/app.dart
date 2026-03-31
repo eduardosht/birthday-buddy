@@ -9,25 +9,6 @@ class BirthdayApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(390, 844),
-      minTextAdapt: true,
-      builder: (ctx, child) => MaterialApp.router(
-        title: 'Birthday Buddy',
-        theme: buildAppTheme(),
-        routerConfig: appRouter,
-        debugShowCheckedModeBanner: false,
-        locale: const Locale('pt', 'BR'),
-        supportedLocales: const [
-          Locale('pt', 'BR'),
-          Locale('en', 'US'),
-        ],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-      ),
-    );
+    return Text('label');
   }
 }
