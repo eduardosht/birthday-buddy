@@ -101,6 +101,14 @@ workflows:
             --dart-define=REVENUE_CAT_API_KEY=$REVENUE_CAT_API_KEY \
             --export-options-plist=/tmp/ExportOptions.plist
 
+      - name: Upload dSYMs to Firebase Crashlytics
+        script: |
+          find build/ios/archive/Runner.xcarchive/dSYMs -name "*.dSYM" | \
+          xargs -I {} \
+          ios/Pods/FirebaseCrashlytics/upload-symbols \
+            -gsp ios/Runner/GoogleService-Info.plist \
+            -p ios {}
+
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/archive/Runner.xcarchive/dSYMs/*.dSYM
