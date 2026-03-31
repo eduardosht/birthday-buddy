@@ -103,11 +103,11 @@ workflows:
 
       - name: Upload dSYMs to Firebase Crashlytics
         script: |
-          find build/ios/archive/Runner.xcarchive/dSYMs -name "*.dSYM" | \
-          xargs -I {} \
-          $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
-            -gsp $CM_BUILD_DIR/ios/Runner/GoogleService-Info.plist \
-            -p ios {}
+          echo "BUILD DIR: $CM_BUILD_DIR"
+          echo "PWD: $(pwd)"
+          ls ios/Runner/
+          find . -name "GoogleService-Info.plist" 2>/dev/null
+          find . -name "upload-symbols" 2>/dev/null
 
     artifacts:
       - build/ios/ipa/*.ipa
