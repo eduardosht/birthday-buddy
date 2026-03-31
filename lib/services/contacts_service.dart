@@ -25,14 +25,13 @@ class ContactsService {
     if (!await requestPermission()) return [];
 
     try {
-      final contacts = await FlutterContacts.getContacts(
-        withProperties: true,
-        withPhoto: false,
+      final contacts = await FlutterContacts.getAll(
+        properties: {ContactProperty.phone},
       );
       if (query.isEmpty) return contacts;
       return contacts
           .where((c) =>
-              c.displayName.toLowerCase().contains(query.toLowerCase()))
+              (c.displayName ?? '').toLowerCase().contains(query.toLowerCase()))
           .toList();
     } catch (e) {
       return [];
@@ -42,18 +41,20 @@ class ContactsService {
   Future<ContactDraft> draftFromContact(Contact contact) async {
     Contact? full;
     try {
-      full = await FlutterContacts.getContact(contact.id, withPhoto: true);
+      full = await FlutterContacts.get(
+        contact.id!,
+        properties: {ContactProperty.phone, ContactProperty.photoFullRes},
+      );
     } catch (_) {}
 
     final phone =
         contact.phones.isNotEmpty ? contact.phones.first.number : null;
 
     return ContactDraft(
-      name: contact.displayName,
+      name: contact.displayName ?? '',
       phoneNumber: phone,
-      photoBytes: full?.photo?.toList(),
+      photoBytes: full?.photo?.fullSize,
       contactId: contact.id,
     );
   }
 }
-

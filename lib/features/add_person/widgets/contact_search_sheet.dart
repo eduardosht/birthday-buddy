@@ -101,13 +101,13 @@ class _ContactSearchSheetState extends State<ContactSearchSheet> {
                                 backgroundColor:
                                     AppColors.primary.withOpacity(0.2),
                                 child: Text(
-                                  contact.displayName.isNotEmpty
-                                      ? contact.displayName[0].toUpperCase()
+                                  (contact.displayName?.isNotEmpty ?? false)
+                                      ? contact.displayName![0].toUpperCase()
                                       : '?',
                                   style: AppTextStyles.titleSmall,
                                 ),
                               ),
-                              title: Text(contact.displayName,
+                              title: Text(contact.displayName ?? '',
                                   style: AppTextStyles.bodyLarge),
                               subtitle: contact.phones.isNotEmpty
                                   ? Text(contact.phones.first.number,
