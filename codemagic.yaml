@@ -105,8 +105,8 @@ workflows:
         script: |
           find build/ios/archive/Runner.xcarchive/dSYMs -name "*.dSYM" | \
           xargs -I {} \
-          ios/Pods/FirebaseCrashlytics/upload-symbols \
-            -gsp ios/Runner/GoogleService-Info.plist \
+          $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
+            -gsp $CM_BUILD_DIR/ios/Runner/GoogleService-Info.plist \
             -p ios {}
 
     artifacts:
