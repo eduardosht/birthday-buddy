@@ -2,20 +2,17 @@ class AppConstants {
   AppConstants._();
 
   // ── Supabase ─────────────────────────────────────────────────────────────
-  static const String supabaseUrl = "123";
-  static const String supabaseAnonKey = "123";
+  static const String supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  static const String supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 
   // ── RevenueCat ───────────────────────────────────────────────────────────
-  static const String revenueCatApiKey = "123";
+  static const String revenueCatApiKey = String.fromEnvironment('REVENUE_CAT_API_KEY');
 
   static void validateEnv() {
     if (supabaseUrl.isEmpty) throw Exception('SUPABASE_URL is not set');
-    if (supabaseAnonKey.isEmpty)
-      throw Exception('SUPABASE_ANON_KEY is not set');
-    if (revenueCatApiKey.isEmpty)
-      throw Exception('REVENUE_CAT_API_KEY is not set');
+    if (supabaseAnonKey.isEmpty) throw Exception('SUPABASE_ANON_KEY is not set');
+    if (revenueCatApiKey.isEmpty) throw Exception('REVENUE_CAT_API_KEY is not set');
   }
-
   static const String rcEntitlementId = 'Birthday Buddy Pro';
   static const String rcMonthlyProductId = 'monthly';
   static const String rcYearlyProductId = 'yearly';
